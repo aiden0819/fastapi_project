@@ -7,7 +7,7 @@ import uvicorn
 
 app = FastAPI()
 
-origins = ["http://127.0.0.1:5500", "http://54.167.60.34"]
+origins = ["http://54.167.60.34:5500", "http://54.167.60.34"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -23,6 +23,11 @@ class Entry(BaseModel):
     time: str
 
 entries = []
+
+@app.get("/")
+async def read_root():
+    return {"message": "Welcome to the FastAPI application!"}
+
 
 @app.post("/entries/", response_model=Entry)
 async def create_entry(entry: Entry):
